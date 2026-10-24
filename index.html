@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Omarchy install</title>
+<style>
+  :root { --bg: #fafafa; --fg: #1a1a1a; --muted: #666; --code: #eee; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --fg: #e8e8e8; --muted: #999; --code: #222; }
+  }
+  body { margin: 0; padding: 48px 16px; background: var(--bg); color: var(--fg);
+         font: 16px/1.6 system-ui, sans-serif; }
+  main { max-width: 640px; margin: 0 auto; }
+  pre { background: var(--code); padding: 12px 16px; border-radius: 6px;
+        overflow-x: auto; font-size: 14px; }
+  p.muted { color: var(--muted); }
+  a { color: inherit; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Omarchy install</h1>
+  <p>Sets up a fresh Omarchy machine. Run in a terminal:</p>
+  <pre>curl -fsSL microlvlaster.github.io/boot.sh | bash</pre>
+  <p>Preview without changing anything:</p>
+  <pre>curl -fsSL microlvlaster.github.io/boot.sh | bash -s -- --dry-run</pre>
+  <p class="muted">The script installs the GitHub CLI, asks you to log in to GitHub,
+  downloads the (private) install repo and runs it.
+  <a href="boot.sh">Read the script first</a>.</p>
+</main>
+</body>
+</html>
