@@ -12,8 +12,13 @@
   body { margin: 0; padding: 48px 16px; background: var(--bg); color: var(--fg);
          font: 16px/1.6 system-ui, sans-serif; }
   main { max-width: 640px; margin: 0 auto; }
-  pre { background: var(--code); padding: 12px 16px; border-radius: 6px;
-        overflow-x: auto; font-size: 14px; }
+  .cmd { display: flex; align-items: stretch; gap: 8px; margin: 1em 0; }
+  pre { flex: 1; min-width: 0; margin: 0; background: var(--code); padding: 12px 16px;
+        border-radius: 6px; overflow-x: auto; font-size: 14px; }
+  button.copy { flex: none; padding: 0 16px; border: 1px solid var(--muted); border-radius: 6px;
+                background: var(--bg); color: var(--fg); font: inherit; font-size: 14px; cursor: pointer; }
+  button.copy:hover { background: var(--code); }
+  button.copy.done { border-color: #2e9d4b; color: #2e9d4b; }
   p.muted { color: var(--muted); }
   a { color: inherit; }
 </style>
@@ -22,12 +27,35 @@
 <main>
   <h1>Omarchy install</h1>
   <p>Sets up a fresh Omarchy machine. Run in a terminal:</p>
-  <pre>curl -fsSL microlvlaster.github.io/boot.sh | bash</pre>
+  <div class="cmd"><pre>curl -fsSL microlvlaster.github.io/boot.sh | bash</pre><button class="copy" type="button">Copy</button></div>
   <p>Preview without changing anything:</p>
-  <pre>curl -fsSL microlvlaster.github.io/boot.sh | bash -s -- --dry-run</pre>
+  <div class="cmd"><pre>curl -fsSL microlvlaster.github.io/boot.sh | bash -s -- --dry-run</pre><button class="copy" type="button">Copy</button></div>
   <p class="muted">The script installs the GitHub CLI, asks you to log in to GitHub,
   downloads the (private) install repo and runs it.
   <a href="boot.sh">Read the script first</a>.</p>
 </main>
+<script>
+  // Copy the command next to the button. Falls back to selecting the text
+  // when the clipboard API is not available.
+  document.querySelectorAll('button.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var pre = btn.previousElementSibling, text = pre.textContent;
+      function done(ok) {
+        btn.textContent = ok ? 'Copied' : 'Press Ctrl+C';
+        btn.classList.toggle('done', ok);
+        setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1500);
+      }
+      function fallback() {
+        var r = document.createRange(); r.selectNodeContents(pre);
+        var sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+        var ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+        done(ok);
+      }
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(function () { done(true); }, fallback);
+      } else { fallback(); }
+    });
+  });
+</script>
 </body>
 </html>
