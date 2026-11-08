@@ -11,8 +11,8 @@
 #   4. runs ./install.sh
 #
 # Settings (environment variables):
-#   OI_REPO    GitHub repo to clone      (default: microlvlaster/omarchy-install)
-#   OI_DIR     where to put it           (default: ~/Work/omarchy-install)
+#   OI_REPO    GitHub repo to clone      (default: microlvlaster/my-omarchy)
+#   OI_DIR     where to put it           (default: ~/Work/my-omarchy)
 #   OI_BRANCH  branch to use             (default: main)
 #
 # The source of this file lives in the repo; the public gist is a copy.
@@ -22,8 +22,8 @@
 main() {
   set -euo pipefail
 
-  local repo="${OI_REPO:-microlvlaster/omarchy-install}"
-  local dir="${OI_DIR:-$HOME/Work/omarchy-install}"
+  local repo="${OI_REPO:-microlvlaster/my-omarchy}"
+  local dir="${OI_DIR:-$HOME/Work/my-omarchy}"
   local branch="${OI_BRANCH:-main}"
 
   local blue='' red='' reset=''
